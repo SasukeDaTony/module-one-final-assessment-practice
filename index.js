@@ -34,7 +34,17 @@ const characters = require('./data/swapi');
  *
  */
 
-function listAllCharacters() {}
+function listAllCharacters(arrCharacters) {
+  strNames = []
+  for (let i=0; i<arrCharacters.length; i++) {
+    strNames.push(arrCharacters["name"]);
+  }
+  if (strNames.length ===0) {
+    return 0;
+  } else {
+    return strNames;
+  }
+}
 
 //UNCOMMENT THE LINES BELOW TO TEST YOUR SOLUTION
 // console.log(listAllCharacters([]));
