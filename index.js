@@ -34,17 +34,19 @@ const characters = require('./data/swapi');
  *
  */
 
-function listAllCharacters(arrCharacters) {
-  strNames = []
-  for (let i=0; i<arrCharacters.length; i++) {
-    strNames.push(arrCharacters["name"]);
+   function listAllCharacters(characters) {
+    newArr =[];
+    if (characters.length === 0) {
+      return 0;
+    } else {
+      for (let i=0; i<characters.length; i++) {
+      if (characters[i].name) {
+        newArr.push(characters[i].name);
+        }
+      }
+    }
+    return newArr;
   }
-  if (strNames.length ===0) {
-    return 0;
-  } else {
-    return strNames;
-  }
-}
 
 //UNCOMMENT THE LINES BELOW TO TEST YOUR SOLUTION
 // console.log(listAllCharacters([]));
@@ -61,10 +63,20 @@ function listAllCharacters(arrCharacters) {
  * No example for this one. You should be able to find the average at this point
  */
 
-function averageHeightOfAllCharacters() {}
+ function averageHeightOfAllCharacters(characters) {
+  let avge = 0;
+   let numOfChar = 0;
+   for (let i=0; i<characters.length; i++) {
+     avge += Number(characters[i].height)
+     numOfChar += 1;
+   }
+   avge /= numOfChar;
+   return avge;
+ }
+
 
 //UNCOMMENT THE LINE BELOW TO TEST YOUR SOLUTION
-//console.log(averageHeightOfAllCharacters(characters))
+// console.log(averageHeightOfAllCharacters(characters))
 
 /**
  * countByEyeColor()
@@ -86,7 +98,22 @@ function averageHeightOfAllCharacters() {}
  *
  */
 
-function countByEyeColor() {}
+ function countByEyeColor(characters) {
+  let allEyeColors = {}; // initialize
+  if (characters.length === 0) {
+    return 'Nothing to check.'   // guard clause for error
+  } else {
+    for (let i=0; i<characters.length; i++) {     //for i loop to iterate through objects 
+      if (allEyeColors[characters[i].eye_color]) {   // checks to see if ALLeyeColor objectproperty already exists checked against current iterable obj
+        allEyeColors[characters[i].eye_color]++;     // if it does exist increment allEYEcolor
+      } else {                                        // if it doesn't then creates it making it =1
+        allEyeColors[characters[i].eye_color] = 1;
+      }
+    }
+    return allEyeColors;
+  }
+}
+
 
 //UNCOMMENT THE LINES BELOW TO TEST YOUR SOLUTION
 // console.log(countByEyeColor([]))
@@ -116,7 +143,17 @@ function countByEyeColor() {}
  *
  */
 
-function getAllCharactersCreatedAfterYear() {}
+function getAllCharactersCreatedAfterYear(characters, date) {
+  let currentCreatedYear;
+  let charactersCreated = [];
+  for (let i=0; i<characters.length; i++) {
+    currentCreatedYear = characters[i].created.slice(0,4);
+    if (Number(currentCreatedYear)>= date) {
+      charactersCreated.push(characters[i].name);
+    }
+  }
+  return charactersCreated;
+}
 
 //UNCOMMENT THE LINE BELOW TO TEST YOUR SOLUTION
 // console.log(getAllCharactersCreatedAfterYear(characters, 2014));
@@ -148,7 +185,16 @@ function getAllCharactersCreatedAfterYear() {}
    }
  */
 
-function getCharactersInMovie() {}
+function getCharactersInMovie(characters, movie) {
+movie.toLowerCase();
+let movieCharactersObj = {}
+  for (let i=0; i<characters.length; i++) {
+   let lowerCasefilms = characters[i].films.map(stringElement => stringElement.toLowerCase())
+    if (lowerCasefilms.includes(movie)) {
+      movieCharactersObj[characters[i].id] = characters[i].name;
+    }
+  }
+  return movieCharactersObj;
 
 //UNCOMMENT THE LINE BELOW TO TEST YOUR SOLUTION
 // console.log(getCharactersInMovie(characters, 'return of the jedi'));
